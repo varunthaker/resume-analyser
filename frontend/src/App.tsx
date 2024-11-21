@@ -1,6 +1,7 @@
 
 import { useState } from 'react'
 import './App.css'
+import axios from 'axios';
 
 function App() {
 
@@ -25,13 +26,49 @@ function App() {
 
   }
 
-  const handleSubmit = (event:React.FormEvent<HTMLFormElement>) => {
+  const resetFormData = () => {
+    (document.getElementById('resumeFile') as HTMLInputElement).value = '';
+    (document.getElementById('language') as HTMLSelectElement).value = '';
+    (document.getElementById('aiModel') as HTMLSelectElement).value = '';
+
+  }
+  const handleSubmit = async (event:React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
 
     console.log("Form Data", formData);
+
+    if (!formData.resumeFile || !formData.language || !formData.aiModel) {
+      alert("Please fill out all fields and upload a file.");
+      return;
+    }
     
+    const formPayload = new FormData()
+    formPayload.append('resumeFile', formData.resumeFile);
+    formPayload.append('language', formData.language);
+    formPayload.append('aiModel', formData.aiModel);
+    try {
+      const response = await axios.post('http://127.0.0.1:8000/api/upload/', formPayload, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
 
+      console.log("Server Response:", response.data);
+      alert("Resume submitted successfully!");
+      resetFormData()
+    } catch (error) {
 
+      if (axios.isAxiosError(error) && error.response) {
+        console.error("Error Response:", error.response);
+        alert(`Error: ${error.response.data.error || 'Failed to submit resume.'}`);
+        
+      } else {
+        console.error("Network Error:", error);
+        alert("Network error. Please check your connection.");
+        
+      }
+      resetFormData()
+    }
 
   }
 
