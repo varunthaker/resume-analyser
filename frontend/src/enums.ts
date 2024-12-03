@@ -1,0 +1,16 @@
+export enum LANGUAGE {
+    EN='ENGLISH',
+    DE='GERMAN',
+}
+
+export enum AIMODEL {
+    ANTHROPIC_CLAUDE = 'ANTHROPIC_CLAUDE',
+    OPENAI_GPT = 'OPENAI_GPT',
+    GOOGLE_GEMINI = 'GOOGLE_GEMINI'
+}
+
+export enum APPSTATE {
+    FORM = 'FORM',
+    LOADING = 'LOADING',
+    RESPONSE = 'RESPONSE'
+}
