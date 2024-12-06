@@ -48,11 +48,80 @@ def get_pdf_text(uploaded_file):
     return pdf_text
 
 def get_prompt(selected_language):
-    prompt_question = '''You are the resume expert. Please Analyse the resume text'''
-    model_response_format = '''The Response format should be of json with the key "body".
-                            The body should be as a plain text.'''
-    example_output = '''{"body": ""  }'''
-    response_language = 'The response should be in %s Language.' % (selected_language)
+    prompt_question = '''You are a professional resume expert. Your task is to analyze the provided resume text and provide specific, actionable feedback to improve it based on standard best practices.'''
+    model_response_format = '''Analyze the resume based on the following criteria:  
+
+1. **Contact Details**:  
+   - Ensure the contact details include only the essential information: name, email, phone number, and a partial address (e.g., 13353 Berlin, Germany).  
+   - Check for relevant social media links, such as LinkedIn, Xing, personal website, or GitHub.  
+   - Summarize who the person is (e.g., software developer, data analyst).  
+
+2. **Education**:  
+   - Verify that degrees (Bachelor’s, Master’s, or special training) are included.  
+   - Check if the university name, grades, durations, and important subjects are mentioned.  
+   - Suggest adding missing details, such as grades or incomplete degree descriptions.  
+
+3. **Experience**:  
+   - Ensure each job entry includes the job title, company name, location, duration, and responsibilities.  
+   - Verify that descriptions use bullet points, action verbs (e.g., “led,” “developed,” “managed”), and quantify achievements where possible.  
+
+4. **Projects**:  
+   - Assess whether project descriptions follow the STAR method (Situation, Task, Action, Result).  
+   - Check for bullet points and action verbs.  
+   - Verify the inclusion of project links (e.g., GitHub, portfolio) if needed.  
+
+5. **Skills**:  
+   - Ensure both technical and soft skills are mentioned.  
+   - Check if the skills are organized in a list format.  
+
+6. **Languages**:  
+   - Ensure international languages such as English and German are mentioned.  
+   - Verify the proficiency level is specified (e.g., B1, fluent).  
+
+7. **Certificates**:  
+   - Check that all relevant certificates are listed clearly. 
+
+**General Instructions**:
+    - Ensure proper formatting throughout the resume.  
+    - If any information is missing or incomplete in a section, include it as a feedback suggestion.  
+    - Feedback should be actionable and concise, focusing on improvements and filling gaps.  
+'''
+    example_output = '''Return the feedback in JSON format as follows:  
+
+{
+    "body": {
+        "contact_details": [
+            "Feedback point 1 for contact details",
+            "Feedback point 2 for contact details"
+        ],
+        "education": [
+            "Feedback point 1 for education",
+            "Feedback point 2 for education"
+        ],
+        "experience": [
+            "Feedback point 1 for experience",
+            "Feedback point 2 for experience"
+        ],
+        "projects": [
+            "Feedback point 1 for projects",
+            "Feedback point 2 for projects"
+        ],
+        "skills": [
+            "Feedback point 1 for skills",
+            "Feedback point 2 for skills"
+        ],
+        "languages": [
+            "Feedback point 1 for languages",
+            "Feedback point 2 for languages"
+        ],
+        "certificates": [
+            "Feedback point 1 for certificates",
+            "Feedback point 2 for certificates"
+        ]
+    }
+}
+'''
+    response_language = f'The response should be in {selected_language} Language.'
 
     prompt_sentense = f"""
         {prompt_question}

@@ -2,20 +2,20 @@
 import { useState } from 'react';
 import './App.css'
 import LoadingPage from './LoadingPage';
-import ResponsePage from './ResponsePage';
+import ResponsePage, { responseDataType } from './ResponsePage';
 import Form from './assets/Form';
 import { APPSTATE } from './enums';
 import axios from 'axios';
 
 function App() {
 
-  const[appState, setAppState] = useState<string>(APPSTATE.FORM)
+  const[appState, setAppState] = useState<string>(APPSTATE.RESPONSE)
   const [formData, setFormData] = useState({
     resumeFile:null as File | null,
     language:'',
     aiModel:''
   })
-  const[responseData, setResponseData] =useState<any>()
+  const[responseData, setResponseData] =useState<responseDataType>()
 
   const handleSubmit = async (event:React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
