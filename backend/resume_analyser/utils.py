@@ -36,8 +36,8 @@ def get_pdf_text(uploaded_file):
         chunk_overlap=100  
                 )
     except Exception as e:
-                os.remove(temp_file_path)   
-                return Response({'message': f"Error extracting text: {str(e)}"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        os.remove(temp_file_path)   
+        return Response({'message': f"Error extracting text: {str(e)}"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         
 
     pdf_text = text_splitter.split_text(raw_text)
@@ -90,7 +90,7 @@ def get_prompt(selected_language):
 
 {
     "body": {
-        "contact_details": [
+        "contactDetails": [
             "Feedback point 1 for contact details",
             "Feedback point 2 for contact details"
         ],
@@ -134,6 +134,8 @@ def get_prompt(selected_language):
 
         # Example Output template:
         {example_output}
+
+
         """
     return prompt_sentense
 
@@ -147,6 +149,7 @@ def get_response_from_Gemini(resume_text, selected_language):
     llm = ChatGoogleGenerativeAI(model=model_name, google_api_key=GOOGLE_API_KEY)
 
     response = llm.invoke(prompt)
+
     return response
 
 def get_response_from_chatGPT(resume_text, selected_language):
@@ -159,6 +162,5 @@ def get_response_from_chatGPT(resume_text, selected_language):
     llm = OpenAI(temperature= 0.7, model=model_name, openai_api_key=OPENAI_API_KEY, max_tokens=500)
     response = llm.invoke(prompt)
 
-    print("response", response)
     return response
       

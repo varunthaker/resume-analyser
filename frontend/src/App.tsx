@@ -9,7 +9,7 @@ import axios from 'axios';
 
 function App() {
 
-  const[appState, setAppState] = useState<string>(APPSTATE.RESPONSE)
+  const[appState, setAppState] = useState<string>(APPSTATE.FORM)
   const [formData, setFormData] = useState({
     resumeFile:null as File | null,
     language:'',
@@ -46,7 +46,7 @@ function App() {
 
       if (axios.isAxiosError(error) && error.response) {
         console.error("Error Response:", error.response);
-        alert(`Error: ${error.response.data.error || 'Failed to submit resume.'}`);
+        alert(`Error: ${error.response.data.error || error.response.data.message || 'Failed to submit resume.'}`);
         
       } else {
         console.error("Network Error:", error);
@@ -70,7 +70,8 @@ function App() {
       <h1>Resume Analyser</h1>
       {appState == APPSTATE.FORM && <Form handleSubmit = {handleSubmit} formData= {formData} setFormData= {setFormData}/>}
       {appState == APPSTATE.LOADING && <LoadingPage/> }
-      {appState == APPSTATE.RESPONSE && <ResponsePage setAppState = {setAppState} responseData={responseData}/> }
+
+      {appState == APPSTATE.RESPONSE && responseData && <ResponsePage setAppState = {setAppState} responseData={responseData}/> }
             
       
     </>
