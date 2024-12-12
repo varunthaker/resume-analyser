@@ -1,0 +1,22 @@
+FROM python:3.12.7-slim
+ENV PYTHONUNBUFFERED=1
+
+RUN apt-get update
+
+#setting working directory
+WORKDIR /web
+
+# copying requirements file
+COPY backend/requirements.txt /web/
+
+#installing all packages
+RUN pip install --no-cache-dir -r requirements.txt
+
+# copying complete code 
+COPY backend/ /web/
+
+# Expose the application's port
+#EXPOSE 8000
+
+# run server
+#CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]

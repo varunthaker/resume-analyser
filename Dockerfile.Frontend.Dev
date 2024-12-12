@@ -1,0 +1,22 @@
+FROM node:18.20-alpine
+
+# set working dir
+WORKDIR /app
+
+# copy code to app
+COPY  ./frontend/ /app/
+
+# install dependency
+RUN rm -rf node_modules && npm install
+
+# expose port
+EXPOSE 5173
+
+# start the app
+CMD ["npm", "run", "dev", "--", "--host"]
+
+# docker build -t frontend -f Dockerfile.Frontend.Dev .
+# docker run -it -p 5173:5173 frontend
+
+
+
