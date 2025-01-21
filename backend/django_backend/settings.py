@@ -45,7 +45,6 @@ INSTALLED_APPS = [
     'resume_analyser',
     'corsheaders',
     'rest_framework',
-
 ]
 
 MIDDLEWARE = [

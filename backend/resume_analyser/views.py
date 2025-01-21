@@ -15,15 +15,12 @@ class upload_resume(APIView):
 
             data_received = request.data
 
-
             if 'resumeFile' not in data_received:
                 return JsonResponse({'message': 'No file uploaded'}, status=status.HTTP_400_BAD_REQUEST)
             
             uploaded_file = data_received['resumeFile']
             selected_language = data_received['language' ]
             selected_AI_Model = data_received['aiModel']
-
-
 
             # extract text from pdf
             resume_text = get_pdf_text(uploaded_file)
@@ -33,16 +30,13 @@ class upload_resume(APIView):
             # get response from AI model
             if selected_AI_Model == AIMODEL.OPENAI_GPT:
                 response = get_response_from_chatGPT(resume_text, selected_language)
-            elif selected_AI_Model == AIMODEL.GOOGLE_GEMINI:
-                response = get_response_from_Gemini( resume_text, selected_language)
+            # elif selected_AI_Model == AIMODEL.GOOGLE_GEMINI:
+            #     response = get_response_from_Gemini( resume_text, selected_language)
             else:
                 return JsonResponse({'message': f'Unsupported AI model: {selected_AI_Model}'}, status=status.HTTP_400_BAD_REQUEST)
 
-            response_json = json.loads(response.content)
-
-            return JsonResponse(response_json.get("body", "No body found"), status=200, safe=False)
+            return JsonResponse(response.get("body", "No body found"), status=200, safe=False)
         except Exception as e:
-            print(f"Error: {str(e)}")
             return JsonResponse({'message': 'Internal server error.', 'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
     def get(self, request):

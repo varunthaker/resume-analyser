@@ -53,7 +53,7 @@ const Form = (props:FormProps) => {
             <select name="aiModel" id="aiModel" onChange={handleInputChange}>
             <option value="">-- Select AI Model --</option>
           <option value={AIMODEL.OPENAI_GPT}>Chat GPT</option>
-          <option value={AIMODEL.GOOGLE_GEMINI}>GEMINI</option>          
+          {/* <option value={AIMODEL.GOOGLE_GEMINI}>GEMINI</option>           */}
             </select>
             <button type="submit">Submit</button>
           </div>

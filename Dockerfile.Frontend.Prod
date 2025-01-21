@@ -1,0 +1,32 @@
+FROM node:18.20-alpine AS build
+
+# set working dir
+WORKDIR /app
+
+# copy neccesary files
+COPY ./frontend/package.json ./frontend/package-lock.json /app/
+RUN npm install --production
+
+# copy source code to app
+COPY  ./frontend/ /app/
+
+# Build the production version of the app
+RUN npm run build
+
+# Serve the app using a lightweight server
+FROM nginx:alpine
+
+# Copy the build output to Nginx's default folder
+COPY --from=build /app/dist /usr/share/nginx/html
+
+# expose port
+EXPOSE 80
+
+# Set Nginx in foreground
+CMD ["nginx", "-g", "daemon off;"]
+
+# docker build -t frontend -f Dockerfile.Frontend.Dev .
+# docker run -it -p 5173:5173 frontend
+
+
+

@@ -1,0 +1,25 @@
+FROM python:3.12.7-slim
+ENV PYTHONUNBUFFERED=1
+
+RUN apt-get update && apt-get install -y --no-install-recommends gcc && apt-get clean
+
+#setting working directory
+WORKDIR /web
+
+# copying requirements file
+COPY backend/requirements.txt /web/
+
+#installing all packages
+RUN pip install --no-cache-dir -r requirements.txt
+
+# copying complete code 
+COPY backend/ /web/
+
+# Expose the application's port
+EXPOSE 8000
+
+# run server
+#CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+
+# Use gunicorn for production (replace 'myproject' with your actual project name)
+CMD ["gunicorn", "django_backend.wsgi:application", "--bind", "0.0.0.0:8000"]

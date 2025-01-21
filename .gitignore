@@ -26,3 +26,4 @@ backend/resume_analyser/migrations/*.py
 .gitignore
 backend/resume_analyser/migrations/*.py
 .dockerignore
+docker-compose-prod.yml
