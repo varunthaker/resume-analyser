@@ -1,5 +1,5 @@
-import DisplayDiv from "./DisplayDiv"
-import { APPSTATE } from "./enums"
+import DisplayDiv from "../components/display-div/DisplayDiv"
+import { APPSTATE } from "../enums/enums"
 
 
 export interface responseDataType {

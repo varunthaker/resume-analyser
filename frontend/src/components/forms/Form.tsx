@@ -1,5 +1,5 @@
 import { FormEventHandler } from "react";
-import { AIMODEL, LANGUAGE } from "../enums";
+import { AIMODEL, LANGUAGE } from "../../enums/enums";
 
 export interface FormData {
     resumeFile: File | null;

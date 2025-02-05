@@ -1,10 +1,10 @@
 
 import { useState } from 'react';
-import './App.css'
-import LoadingPage from './LoadingPage';
-import ResponsePage, { responseDataType } from './ResponsePage';
-import Form from './assets/Form';
-import { APPSTATE } from './enums';
+import './styles/App.css'
+import LoadingPage from './pages/LoadingPage';
+import ResponsePage, { responseDataType } from './pages/ResponsePage';
+import Form from './components/forms/Form';
+import { APPSTATE } from './enums/enums';
 import axios from 'axios';
 
 function App() {
