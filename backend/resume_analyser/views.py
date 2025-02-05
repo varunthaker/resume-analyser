@@ -7,6 +7,21 @@ from resume_analyser.enums import LANGUAGE, AIMODEL
 from resume_analyser.utils import get_pdf_text, get_response_from_Gemini, get_response_from_chatGPT
 import os
 
+
+
+class login_view(APIView):
+    def post(self, request):
+
+        userId= request.data['userId']
+        password= request.data['password']
+
+        VALID_USER_ID = os.getenv('VALID_USER_ID')
+        VALID_PASSWORD = os.getenv('VALID_PASSWORD')
+
+
+        if userId != VALID_USER_ID or password != VALID_PASSWORD:
+            return JsonResponse({'message': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
+        return JsonResponse({'message': 'Login successful'}, status=status.HTTP_200_OK)
 class upload_resume(APIView):
 
     def post(self, request, *args, **kwargs):
@@ -41,6 +56,8 @@ class upload_resume(APIView):
 
     def get(self, request):
         return JsonResponse({'message': 'Get request Sucess'}, status=status.HTTP_200_OK)
+
+
     
 
 
