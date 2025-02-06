@@ -19,15 +19,15 @@ jobs:
       - name: Configure Docker for GCP
         run: gcloud auth configure-docker europe-central2-docker.pkg.dev
 
-      - name: Build and Push Frontend Image
-        run: |
-          docker build -f Dockerfile.Frontend.Prod -t europe-central2-docker.pkg.dev/resume-analyser-450115/resume-analyzer-repo/frontend:latest .
-          docker push europe-central2-docker.pkg.dev/resume-analyser-450115/resume-analyzer-repo/frontend:latest
-
       - name: Build and Push Backend Image
         run: |
           docker build -f Dockerfile.Backend.Prod -t europe-central2-docker.pkg.dev/resume-analyser-450115/resume-analyzer-repo/backend:latest .
           docker push europe-central2-docker.pkg.dev/resume-analyser-450115/resume-analyzer-repo/backend:latest
+
+      - name: Build and Push Frontend Image
+        run: |
+          docker build -f Dockerfile.Frontend.Prod -t europe-central2-docker.pkg.dev/resume-analyser-450115/resume-analyzer-repo/frontend:latest .
+          docker push europe-central2-docker.pkg.dev/resume-analyser-450115/resume-analyzer-repo/frontend:latest
 
       - name: Deploy Frontend to Cloud Run
         run: |
