@@ -21,22 +21,22 @@ jobs:
 
       - name: Build and Push Frontend Image
         run: |
-          docker build -t europe-central2-docker.pkg.dev/resume-analyser-450115/resume-analyzer-repo/frontend:latest ./frontend
+          docker build -f Dockerfile.Frontend.Prod -t europe-central2-docker.pkg.dev/resume-analyser-450115/resume-analyzer-repo/frontend:latest .
           docker push europe-central2-docker.pkg.dev/resume-analyser-450115/resume-analyzer-repo/frontend:latest
 
       - name: Build and Push Backend Image
         run: |
-          docker build -t europe-central2-docker.pkg.dev/resume-analyser-450115/resume-analyzer-repo/backend:latest ./backend
+          docker build -f Dockerfile.Backend.Prod -t europe-central2-docker.pkg.dev/resume-analyser-450115/resume-analyzer-repo/backend:latest .
           docker push europe-central2-docker.pkg.dev/resume-analyser-450115/resume-analyzer-repo/backend:latest
 
       - name: Deploy Frontend to Cloud Run
         run: |
           gcloud run deploy frontend \
               --image europe-central2-docker.pkg.dev/resume-analyser-450115/resume-analyzer-repo/frontend:latest \
-              --platform managed  --region europe-central2 --no-allow-unauthenticated
+              --platform managed  --region europe-central2 --allow-unauthenticated
 
       - name: Deploy Backend to Cloud Run
         run: |
           gcloud run deploy backend \
               --image europe-central2-docker.pkg.dev/resume-analyser-450115/resume-analyzer-repo/backend:latest \
-              --platform managed  --region europe-central2 --no-allow-unauthenticated
+              --platform managed  --region europe-central2 --allow-unauthenticated

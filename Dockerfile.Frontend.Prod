@@ -5,7 +5,7 @@ WORKDIR /app
 
 # copy neccesary files
 COPY ./frontend/package.json ./frontend/package-lock.json /app/
-RUN npm install --production
+RUN npm install --production && npm prune --production
 
 # copy source code to app
 COPY  ./frontend/ /app/
@@ -25,8 +25,6 @@ EXPOSE 80
 # Set Nginx in foreground
 CMD ["nginx", "-g", "daemon off;"]
 
-# docker build -t frontend -f Dockerfile.Frontend.Dev .
-# docker run -it -p 5173:5173 frontend
 
 
 
