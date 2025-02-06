@@ -7,6 +7,9 @@ WORKDIR /app
 COPY ./frontend/package.json ./frontend/package-lock.json /app/
 RUN npm install --production 
 
+# Install TypeScript globally to make sure `tsc` is available
+RUN npm install -g typescript
+
 # copy source code to app
 COPY  ./frontend/ /app/
 
