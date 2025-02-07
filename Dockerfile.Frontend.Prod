@@ -5,10 +5,15 @@ WORKDIR /app
 
 # copy neccesary files
 COPY ./frontend/package.json ./frontend/package-lock.json /app/
-RUN npm install --production 
+
+# Install ALL dependencies (including devDependencies) for build
+RUN npm install
 
 # Install TypeScript globally to make sure `tsc` is available
 RUN npm install -g typescript
+
+# Install necessary type definitions
+RUN npm install --save-dev @types/react @types/react-dom
 
 # copy source code to app
 COPY  ./frontend/ /app/
