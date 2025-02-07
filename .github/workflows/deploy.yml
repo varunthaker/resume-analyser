@@ -32,11 +32,11 @@ jobs:
       - name: Deploy Frontend to Cloud Run
         run: |
           gcloud run deploy frontend \
-              --image europe-central2-docker.pkg.dev/resume-analyser-450115/resume-analyzer/frontend:latest \
+              --image europe-central2-docker.pkg.dev/resume-analyser-450115/resume-analyser/frontend:latest \
               --platform managed  --region europe-central2 --allow-unauthenticated
 
       - name: Deploy Backend to Cloud Run
         run: |
           gcloud run deploy backend \
-              --image europe-central2-docker.pkg.dev/resume-analyser-450115/resume-analyzer/backend:latest \
+              --image europe-central2-docker.pkg.dev/resume-analyser-450115/resume-analyser/backend:latest \
               --platform managed  --region europe-central2 --allow-unauthenticated
