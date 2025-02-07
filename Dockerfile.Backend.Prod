@@ -16,8 +16,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY backend/ /web/
 
 # Expose the application's port
-EXPOSE 8000
+EXPOSE 8080
 
 
 # Use gunicorn for production (replace 'myproject' with your actual project name)
-CMD ["gunicorn", "django_backend.wsgi:application", "--bind", "0.0.0.0:8000"]
+CMD ["gunicorn", "django_backend.wsgi:application", "--bind", "0.0.0.0:8080"]
