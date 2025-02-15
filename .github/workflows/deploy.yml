@@ -9,42 +9,46 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Authenticate to GCP
         uses: google-github-actions/auth@v2
         with:
           credentials_json: ${{ secrets.GCP_CREDENTIALS }}
 
-      - name: Configure Docker for GCP
-        run: gcloud auth configure-docker europe-central2-docker.pkg.dev
-
-      - name: Build and Push Backend Image
-        run: |
-          docker build -f Dockerfile.Backend.Prod -t europe-central2-docker.pkg.dev/resume-analyser-450115/resume-analyser/backend:${{ github.sha }} .
-          docker push europe-central2-docker.pkg.dev/resume-analyser-450115/resume-analyser/backend:${{ github.sha }}
-
-      - name: Deploy Backend to Cloud Run
-        run: |
-          gcloud run deploy backend \
-              --image europe-central2-docker.pkg.dev/resume-analyser-450115/resume-analyser/backend:${{ github.sha }}  \
-              --platform managed  --region europe-central2 --allow-unauthenticated \
-              --port=8080
-
-      - name: Build and Push Frontend Image
-        run: |
-          docker build -f Dockerfile.Frontend.Prod -t europe-central2-docker.pkg.dev/resume-analyser-450115/resume-analyser/frontend:${{ github.sha }} .
-          docker push europe-central2-docker.pkg.dev/resume-analyser-450115/resume-analyser/frontend:${{ github.sha }}
-
-      - name: Deploy Frontend to Cloud Run
-        run: |
-          gcloud run deploy frontend \
-              --image europe-central2-docker.pkg.dev/resume-analyser-450115/resume-analyser/frontend:${{ github.sha }} \
-              --platform managed  --region europe-central2 --allow-unauthenticated \
-              --port=3000
-
       - name: Set Backend and Frontend IAM Policy
         run: |
           gcloud projects add-iam-policy-binding resume-analyser-450115 \
           --member="serviceAccount:github-actions@resume-analyser-450115.iam.gserviceaccount.com" \
           --role="roles/run.admin"
+
+          gcloud projects add-iam-policy-binding resume-analyser-450115 \
+          --member="serviceAccount:github-actions@resume-analyser-450115.iam.gserviceaccount.com" \
+          --role="roles/artifactregistry.writer"
+
+      - name: Configure Docker for GCP
+        run: gcloud auth configure-docker europe-central2-docker.pkg.dev
+
+      - name: Build and Push Backend Image
+        run: |
+          docker build -f Dockerfile.Backend.Prod -t europe-central2-docker.pkg.dev/resume-analyser-450115/resume-analyser/backend:latest .
+          docker push europe-central2-docker.pkg.dev/resume-analyser-450115/resume-analyser/backend:latest
+
+      - name: Deploy Backend to Cloud Run
+        run: |
+          gcloud run deploy backend \
+              --image europe-central2-docker.pkg.dev/resume-analyser-450115/resume-analyser/backend:latest \
+              --platform managed  --region europe-central2 --allow-unauthenticated \
+              --port=8080
+
+      - name: Build and Push Frontend Image
+        run: |
+          docker build -f Dockerfile.Frontend.Prod -t europe-central2-docker.pkg.dev/resume-analyser-450115/resume-analyser/frontend:latest .
+          docker push europe-central2-docker.pkg.dev/resume-analyser-450115/resume-analyser/frontend:latest
+
+      - name: Deploy Frontend to Cloud Run
+        run: |
+          gcloud run deploy frontend \
+              --image europe-central2-docker.pkg.dev/resume-analyser-450115/resume-analyser/frontend:latest \
+              --platform managed  --region europe-central2 --allow-unauthenticated \
+              --port=3000
