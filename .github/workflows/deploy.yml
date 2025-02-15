@@ -59,4 +59,4 @@ jobs:
           gcloud run deploy frontend \
               --image europe-central2-docker.pkg.dev/resume-analyser-450115/resume-analyser/frontend:latest \
               --platform managed  --region europe-central2 --allow-unauthenticated \
-              --port=3000
+              --port=8080
