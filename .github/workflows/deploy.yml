@@ -31,13 +31,6 @@ jobs:
               --platform managed  --region europe-central2 --allow-unauthenticated \
               --port=8080
 
-      - name: Set Backend IAM Policy
-        run: |
-          gcloud beta run services add-iam-policy-binding backend \
-              --region=europe-central2 \
-              --member=allUsers \
-              --role=roles/run.invoker
-
       - name: Build and Push Frontend Image
         run: |
           docker build -f Dockerfile.Frontend.Prod -t europe-central2-docker.pkg.dev/resume-analyser-450115/resume-analyser/frontend:latest .
@@ -50,9 +43,14 @@ jobs:
               --platform managed  --region europe-central2 --allow-unauthenticated \
               --port=3000
 
+      - name: Set Backend IAM Policy
+        run: |
+          gcloud projects add-iam-policy-binding resume-analyser-450115 \
+          --member="serviceAccount:github-actions@resume-analyser-450115.iam.gserviceaccount.com" \
+          --role="roles/run.admin"
+
       - name: Set Frontend IAM Policy
         run: |
-          gcloud beta run services add-iam-policy-binding frontend \
-              --region=europe-central2 \
-              --member=allUsers \
-              --role=roles/run.invoker
+          gcloud projects add-iam-policy-binding resume-analyser-450115 \
+              --member="serviceAccount:github-actions@resume-analyser-450115.iam.gserviceaccount.com" \
+              --role="roles/run.admin"
