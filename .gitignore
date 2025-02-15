@@ -27,3 +27,4 @@ backend/resume_analyser/migrations/*.py
 backend/resume_analyser/migrations/*.py
 .dockerignore
 docker-compose-prod.yml
+learn.txt

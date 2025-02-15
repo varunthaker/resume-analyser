@@ -16,19 +16,23 @@ jobs:
         with:
           credentials_json: ${{ secrets.GCP_CREDENTIALS }}
 
-      - name: Set Backend and Frontend IAM Policy
-        run: |
-          gcloud projects add-iam-policy-binding resume-analyser-450115 \
-          --member="serviceAccount:github-actions@resume-analyser-450115.iam.gserviceaccount.com" \
-          --role="roles/run.admin"
+      # - name: Set Backend and Frontend IAM Policy
+      #   run: |
+      #     gcloud projects add-iam-policy-binding resume-analyser-450115 \
+      #     --member="serviceAccount:github-actions@resume-analyser-450115.iam.gserviceaccount.com" \
+      #     --role="roles/run.admin"
 
-          gcloud projects add-iam-policy-binding resume-analyser-450115 \
-          --member="serviceAccount:github-actions@resume-analyser-450115.iam.gserviceaccount.com" \
-          --role="roles/artifactregistry.writer"
+      #     gcloud projects add-iam-policy-binding resume-analyser-450115 \
+      #     --member="serviceAccount:github-actions@resume-analyser-450115.iam.gserviceaccount.com" \
+      #     --role="roles/artifactregistry.writer"
 
-          gcloud projects add-iam-policy-binding resume-analyser-450115 \
-          --member="serviceAccount:github-actions@resume-analyser-450115.iam.gserviceaccount.com" \
-          --role="roles/resourcemanager.projectIamAdmin"
+      #     gcloud projects add-iam-policy-binding resume-analyser-450115 \
+      #     --member="serviceAccount:github-actions@resume-analyser-450115.iam.gserviceaccount.com" \
+      #     --role="roles/resourcemanager.projectIamAdmin"
+
+      #     gcloud projects add-iam-policy-binding resume-analyser-450115 \
+      #     --member="serviceAccount:github-actions@resume-analyser-450115.iam.gserviceaccount.com" \
+      #     --role="roles/iam.serviceAccountUser"
 
       - name: Configure Docker for GCP
         run: gcloud auth configure-docker europe-central2-docker.pkg.dev
