@@ -69,28 +69,21 @@ function App() {
 
   return (
     <>
-      {!isAuthenticated ? (
-        <Login setIsAuthenticated={setIsAuthenticated} />
-      ) : (
-        <>
-          <h1>Resume Analyser</h1>
-          {appState == APPSTATE.FORM && (
-            <Form
-              handleSubmit={handleSubmit}
-              formData={formData}
-              setFormData={setFormData}
-            />
-          )}
-          {appState == APPSTATE.LOADING && <LoadingPage />}
+      <>
+        <h1>Resume Analyser</h1>
+        {appState == APPSTATE.FORM && (
+          <Form
+            handleSubmit={handleSubmit}
+            formData={formData}
+            setFormData={setFormData}
+          />
+        )}
+        {appState == APPSTATE.LOADING && <LoadingPage />}
 
-          {appState == APPSTATE.RESPONSE && responseData && (
-            <ResponsePage
-              setAppState={setAppState}
-              responseData={responseData}
-            />
-          )}
-        </>
-      )}
+        {appState == APPSTATE.RESPONSE && responseData && (
+          <ResponsePage setAppState={setAppState} responseData={responseData} />
+        )}
+      </>
     </>
   );
 }
