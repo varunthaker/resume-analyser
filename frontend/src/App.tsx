@@ -5,10 +5,10 @@ import ResponsePage, { responseDataType } from "./pages/ResponsePage";
 import Form from "./components/forms/Form";
 import { APPSTATE } from "./enums/enums";
 import axios from "axios";
-import Login from "./components/login/Login";
+// import Login from "./components/login/Login";
 
 function App() {
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+  // const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [appState, setAppState] = useState<string>(APPSTATE.FORM);
   const [formData, setFormData] = useState({
     resumeFile: null as File | null,
@@ -69,21 +69,19 @@ function App() {
 
   return (
     <>
-      <>
-        <h1>Resume Analyser</h1>
-        {appState == APPSTATE.FORM && (
-          <Form
-            handleSubmit={handleSubmit}
-            formData={formData}
-            setFormData={setFormData}
-          />
-        )}
-        {appState == APPSTATE.LOADING && <LoadingPage />}
+      <h1>Resume Analyser</h1>
+      {appState == APPSTATE.FORM && (
+        <Form
+          handleSubmit={handleSubmit}
+          formData={formData}
+          setFormData={setFormData}
+        />
+      )}
+      {appState == APPSTATE.LOADING && <LoadingPage />}
 
-        {appState == APPSTATE.RESPONSE && responseData && (
-          <ResponsePage setAppState={setAppState} responseData={responseData} />
-        )}
-      </>
+      {appState == APPSTATE.RESPONSE && responseData && (
+        <ResponsePage setAppState={setAppState} responseData={responseData} />
+      )}
     </>
   );
 }
