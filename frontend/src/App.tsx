@@ -30,7 +30,7 @@ function App() {
     formPayload.append("aiModel", formData.aiModel);
     try {
       const response = await axios.post(
-        "http://127.0.0.1:8000/api/upload/",
+        "https://backend-773125467646.europe-central2.run.app/api/upload/",
         formPayload,
         {
           headers: {
